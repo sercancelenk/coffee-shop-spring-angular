@@ -1,0 +1,33 @@
+ONEMLI =>   1. Mysql veritabani kurulu olmasi gerekir.
+ONEMLI =>   Mysql server'in default character seti utf8 olması gerekir.(Cunku turkce karakterleri desteklemeli)
+
+2. src/main/resources icerisindeki app.properties dosyasinda yer alan,
+    db1.connection.url
+    db1.connection.username
+    db1.connection.password
+
+    - keylerinin degerleri yazilmali,
+    (Ornek: mysql serverin kurulu oldugu makina da uygulama calistirilicaksa,
+            db1.connection.username = <username>
+            db1.connection.password = <password>
+      Eger mysql server baska bir makinadaysa,
+            db1.connection.url = jdbc:mysql://<ip_adres>:<port>/coffeeshopdb?createDatabaseIfNotExist=true&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&tinyInt1isBit=false
+            db1.connection.username = <username>
+            db1.connection.password = <password>
+
+
+3. Terminal ekrani uzerinden, proje dizininde mvn jetty:run komutu calistirilmali
+4. Browser uzerinden localhost:8080 adresinden uygulamaya erisilebilir.
+
+------------
+
+Ornek Admin kullanicisi
+username = demo@demo.com
+password = 123
+
+Standart Kullanici
+username = test@test.com
+password = 123
+
+Tesekkurler.
+Sercan.

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @author Sercan CELENK -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="sr.api"/>
+    <context:property-placeholder
+            location="classpath*:app.properties"/>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="sr.api.core.persistence.domain"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${db1.dialect}</prop>
+                <prop key="hibernate.show_sql">${db1.show_sql}</prop>
+                <prop key="hibernate.format_sql">${db1.format_sql}</prop>
+                <prop key="hibernate.generate_statistics">${db1.generate_statistics}</prop>
+                <prop key="hibernate.max_fetch_depth">${db1.max_fetch_depth}</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.hbm2ddl.import_files">init_data.sql</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${db1.connection.driver}"/>
+        <property name="jdbcUrl" value="${db1.connection.url}"/>
+        <property name="user" value="${db1.connection.username}"/>
+        <property name="password" value="${db1.connection.password}"/>
+        <property name="initialPoolSize" value="${db1.connection.initialPoolSize}"/>
+        <property name="minPoolSize" value="${db1.connection.minPoolSize}"/>
+        <property name="maxPoolSize" value="${db1.connection.maxPoolSize}"/>
+        <property name="maxIdleTime" value="${db1.connection.maxIdleTime}"/>
+        <property name="idleConnectionTestPeriod"
+                  value="${db1.connection.idleConnectionTestPeriod}"/>
+        <property name="preferredTestQuery" value="${db1.connection.preferredTestQuery}"/>
+        <property name="acquireIncrement" value="${db1.connection.acquireIncrement}"/>
+        <property name="maxStatements" value="${db1.connection.maxStatements}"/>
+        <property name="numHelperThreads" value="${db1.connection.numHelperThreads}"/>
+        <property name="maxStatementsPerConnection"
+                  value="${db1.connection.maxStatementsPerConnection}"/>
+
+
+    </bean>
+
+    <bean id="txManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+
+
+</beans>

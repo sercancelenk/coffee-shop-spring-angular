@@ -1,0 +1,16 @@
+{
+  "name": "coffee-shop",
+  "version": "0.0.0",
+  "authors": [
+    "byzasy <sercancelenk@me.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/webapp/resources/js/bower",
+    "test",
+    "tests"
+  ]
+}
